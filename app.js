@@ -17,10 +17,8 @@ const PORT = process.env.PORT || 8000;
 app.use(cors());
 app.use(express.json());
 
-// Call the connectToMongoDB function to establish the MongoDB connection
 connectToMongoDB();
 
-// Routes
 app.use("/api/user", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/review", reviewRouter);
