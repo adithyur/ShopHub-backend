@@ -20,6 +20,7 @@ router.post('/addproduct', upload.fields([
         sellerid,
         productName,
         price,
+        offer,
         productType,
         category,
         brand,
@@ -49,6 +50,7 @@ router.post('/addproduct', upload.fields([
         sellerid,
         productName,
         price,
+        offer,
         productType,
         category,
         brand,
@@ -85,6 +87,7 @@ async (req, res) => {
 
       productName,
       price,
+      offer,
       productType,
       category,
       brand,
@@ -108,6 +111,7 @@ async (req, res) => {
     
     existingProduct.productName = productName;
     existingProduct.price = price;
+    existingProduct.offer = offer;
     existingProduct.productType = productType;
     existingProduct.category = category;
     existingProduct.brand = brand;
