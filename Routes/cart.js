@@ -58,13 +58,15 @@ router.post('/carts', async (req, res) => {
       const carts = await Cart.find({ userid })
         .populate({ path: 'productid', model: 'Products' })
         .exec();
+
+        const totalCount = carts.reduce((acc, cart) => acc + cart.quantity, 0);
   
       const data = carts.map((cart) => ({
         productId: cart.productid._id,
         productDetails: cart.productid,
         quantity: cart.quantity,
         total: cart.total,
-      
+        count: totalCount,
       }));
   
       res.status(200).json(data);
