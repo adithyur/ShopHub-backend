@@ -66,7 +66,7 @@ router.post('/carts', async (req, res) => {
         productDetails: cart.productid,
         quantity: cart.quantity,
         total: cart.total,
-        count: totalCount,
+        count: cart.totalCount,
       }));
   
       res.status(200).json(data);

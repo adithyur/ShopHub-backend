@@ -156,4 +156,19 @@ router.get('/getProductReviews/:productId', async (req, res) => {
     }
   });
 
+  router.get('/count/:productId', async (req, res) => {
+    try {
+        const { productId } = req.params;
+        
+        const reviewCount = await Review.countDocuments({ productid: productId });
+        
+        const commentCount = await Review.countDocuments({ productid: productId, comments: { $ne: null } });
+
+        res.status(200).json({ reviewCount, commentCount });
+    } catch (error) {
+        console.error('Error counting reviews and comments:', error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
   module.exports = router;
