@@ -547,7 +547,8 @@ router.post('/place', async (req, res) => {
             category: '$product.category',
             brand: '$product.brand',
             description: '$product.description',
-            quantitySold: '$count' 
+            quantitySold: '$count',
+            offer: '$product.offer',
           }
         }
       ]);
