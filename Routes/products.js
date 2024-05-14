@@ -88,9 +88,6 @@ async (req, res) => {
       productName,
       price,
       offer,
-      productType,
-      category,
-      brand,
       description,
       quantity
     } = req.body;
@@ -112,9 +109,6 @@ async (req, res) => {
     existingProduct.productName = productName;
     existingProduct.price = price;
     existingProduct.offer = offer;
-    existingProduct.productType = productType;
-    existingProduct.category = category;
-    existingProduct.brand = brand;
     existingProduct.description = description;
     existingProduct.quantity = quantity;
 
