@@ -112,20 +112,34 @@ async (req, res) => {
     existingProduct.description = description;
     existingProduct.quantity = quantity;
 
-    if (image1) existingProduct.image = image1[0].path;
-    if (image2) existingProduct.image2 = image2[0].path;
-    if (image3) existingProduct.image3 = image3[0].path;
-    if (image4) existingProduct.image4 = image4[0].path;
-    if (image5) existingProduct.image5 = image5[0].path;
+    // Function to upload image to Cloudinary
+    const uploadImage = async (image) => {
+      if (!image) return null;
+      const result = await cloudinary.uploader.upload(image[0].path);
+      return result.secure_url;
+    };
 
+    // Array to hold promises for image uploads
+    const uploadPromises = [image1, image2, image3, image4, image5].map(uploadImage);
+
+    // Wait for all image uploads to finish
+    const [uploadedImage1, uploadedImage2, uploadedImage3, uploadedImage4, uploadedImage5] = await Promise.all(uploadPromises);
+
+    // Update product with new image URLs
+    if (uploadedImage1) existingProduct.image = uploadedImage1;
+    if (uploadedImage2) existingProduct.image2 = uploadedImage2;
+    if (uploadedImage3) existingProduct.image3 = uploadedImage3;
+    if (uploadedImage4) existingProduct.image4 = uploadedImage4;
+    if (uploadedImage5) existingProduct.image5 = uploadedImage5;
+
+    // Save the updated product
     await existingProduct.save();
     res.status(200).json(existingProduct);
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).json({ message: error });
   }
-}
-);
+});
 
 
 router.get('/getproduct', async (req, res) => {
