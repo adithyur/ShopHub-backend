@@ -18,7 +18,7 @@ router.post('/place', async (req, res) => {
           userid,
           productid,
           sellerid,
-          status: 'waiting for confirmation',
+          status: 'cart',
         });
   
         if (existingOrder) {
@@ -38,7 +38,7 @@ router.post('/place', async (req, res) => {
             quantity,
             price,
             total,
-            status: 'waiting for confirmation',
+            status: 'cart',
           });
           await newOrder.save();
           placedOrUpdatedOrders.push(newOrder);
@@ -78,7 +78,7 @@ router.post('/place', async (req, res) => {
   router.post('/getorderbyuserid/:userid', async (req, res) => {
     try {
       const { userid } = req.params;
-      const viewOrders = await Order.find({ status: { $ne: 'waiting for confirmation' }, userid })
+      const viewOrders = await Order.find({ status: { $ne: 'cart' }, userid })
         .populate({ path: 'productid', model: 'Products' })
         .exec();
   
@@ -141,7 +141,7 @@ router.post('/place', async (req, res) => {
   router.get('/getOrderDetails/:userid', async (req, res) => {
     try {
       const { userid } = req.params;
-      const status = 'waiting for confirmation';
+      const status = 'cart';
       //console.log('user id : ',userid);
       const order = await Order.findOne({ userid, status }).select('_id productid address');
   
@@ -185,7 +185,7 @@ router.post('/place', async (req, res) => {
     try {
       const { userid } = req.params;
   
-      const orders = await Order.find({ userid, status: 'waiting for confirmation' })
+      const orders = await Order.find({ userid, status: 'cart' })
         .populate({ path: 'productid', model: 'Products' })
         .exec();
   
@@ -280,7 +280,7 @@ router.post('/place', async (req, res) => {
 
   router.post('/viewOrder', async (req, res) => {
     try {
-      const viewOrders = await Order.find({ status: { $ne: 'waiting for confirmation' } })
+      const viewOrders = await Order.find({ status: { $ne: 'cart' } })
         .populate({ path: 'productid', model: 'Products' })
         .exec();
   
